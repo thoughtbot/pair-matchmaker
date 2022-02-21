@@ -11,16 +11,26 @@ module Slack
 
     def call(types:)
       response = retry_when_rate_limited do
-        ClientWrapper.client.conversations_list(types: approved_types(types), limit: 1000)
+        ClientWrapper.client.conversations_list(types: approved_types(types), limit: 1000, exclude_archived: true)
       end
 
-      (response&.channels || []).reject { |ch| ch.is_archived }
+      get_paged_channels(response&.response_metadata&.next_cursor, response&.channels || [])
     end
 
     private
 
     def approved_types(types)
       types.split(",").select { |t| SLACK_CHANNEL_TYPES.include?(t) }.join(",")
+    end
+
+    def get_paged_channels(cursor, channels)
+      while cursor.present?
+        response = ClientWrapper.client.conversations_list(cursor: cursor, types: approved_types(types), limit: 1000, exclude_archived: true)
+        channels.append(response.channels)
+        cursor = response.response_metadata.next_cursor
+      end
+
+      channels.flatten
     end
   end
 end
