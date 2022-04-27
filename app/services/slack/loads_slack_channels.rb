@@ -14,7 +14,7 @@ module Slack
         ClientWrapper.client.conversations_list(types: approved_types(types), limit: 1000, exclude_archived: true)
       end
 
-      get_paged_channels(response&.response_metadata&.next_cursor, response&.channels || [])
+      get_paged_channels(cursor: response&.response_metadata&.next_cursor, channels: response&.channels || [], types: types)
     end
 
     private
@@ -23,11 +23,11 @@ module Slack
       types.split(",").select { |t| SLACK_CHANNEL_TYPES.include?(t) }.join(",")
     end
 
-    def get_paged_channels(cursor, channels)
+    def get_paged_channels(cursor:, channels:, types:)
       while cursor.present?
         response = ClientWrapper.client.conversations_list(cursor: cursor, types: approved_types(types), limit: 1000, exclude_archived: true)
         channels.append(response.channels)
-        cursor = response.response_metadata.next_cursor
+        cursor = response.response_metadata&.next_cursor
       end
 
       channels.flatten
