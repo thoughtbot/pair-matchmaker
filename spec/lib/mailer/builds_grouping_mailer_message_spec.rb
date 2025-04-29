@@ -23,7 +23,7 @@ RSpec.describe Mailer::BuildsGroupingMailerMessage do
       recipient: recipient,
       grouping: "test_time",
       channel: "rotating-test",
-      other_members: [other_member]
+      other_members: [other_member],
     )
 
     expect(mailer.to).to eq(["holmes@deduction.com"])

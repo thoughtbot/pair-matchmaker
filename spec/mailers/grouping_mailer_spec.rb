@@ -24,11 +24,11 @@ RSpec.describe GroupingMailer do
     expect(email.body.to_s).to eq(
       <<~BODY
         Howdy Sherlock,
-        
+
         You've been matched up with Watson for Test from the #rotating-test Slack channel!
-        
+
         Find a time to meet, and have fun!
-        
+
         - Double Up San
 
       BODY
