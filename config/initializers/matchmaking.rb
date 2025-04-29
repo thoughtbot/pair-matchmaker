@@ -1,3 +1,5 @@
+require "ostruct"
+
 Rails.application.configure do
   group_defaults = {
     active: false,
