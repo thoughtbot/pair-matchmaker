@@ -6,14 +6,14 @@ RSpec.describe GroupingMailer do
   end
 
   it "creates encourage_match mailer" do
-    email = GroupingMailer.encourage_match(
+    email = GroupingMailer.with(
       recipient: Mailer::MatchMember.new(name: "Sherlock", email: "holmes@deduction.com"),
       mailer_params: Mailer::GroupingMailerParameters.new(
         other_members: [Mailer::MatchMember.new(name: "Watson", email: "watson@deduction.com")],
         grouping: "test",
         channel: "rotating-test"
       )
-    )
+    ).encourage_match
 
     expect { email.deliver_now }.to change { GroupingMailer.deliveries.count }.by(1)
 
