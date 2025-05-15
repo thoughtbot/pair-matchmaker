@@ -14,12 +14,12 @@ RSpec.describe Slack::SendsSlackMessage do
       user: Slack::Messages::Message.new(id: "USER_ID")
     )
 
-    expect(@slack_client).to receive(:chat_postMessage).with(
+    expect(@slack_client).to receive(:chat_postMessage).with({
       channel: "USER_IM_ID",
       blocks: [
         {type: "section", text: {type: "plain_text", text: "Hello World"}}
       ]
-    )
+    })
 
     subject.call(channel: slack_user_im.id, blocks: [
       {type: "section", text: {type: "plain_text", text: "Hello World"}}
