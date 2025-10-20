@@ -1,15 +1,28 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.8"
+ruby "3.4.5"
 
 gem "rails", "~> 7.0.0"
-gem "puma"
-gem "slack-ruby-client"
+
 gem "bootsnap", require: false
-gem "pg"
 gem "bugsnag", "~> 6.24"
+gem "pg"
+gem "puma"
+
 gem "sendgrid-actionmailer"
+gem "slack-ruby-client", "~> 2.5.1"
+
+# legacy - errors during RSpec if not there
+gem "bigdecimal"
+gem "drb"
+gem "mutex_m"
+
+# legacy - deprecation warnings during RSpec if not there
+gem "benchmark"
+gem "irb"
+gem "ostruct"
+gem "reline"
 
 group :development, :test do
   gem "dotenv-rails"
@@ -18,8 +31,8 @@ group :development, :test do
 end
 
 group :development do
-  gem "rack-mini-profiler"
   gem "listen"
+  gem "rack-mini-profiler"
 end
 
 group :test do

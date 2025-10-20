@@ -8,7 +8,7 @@ require "rspec/rails"
 
 Slack::ClientWrapper.disable!
 
-Rails.root.glob("spec/support/**/*.rb").sort_by(&:to_s).each { require _1 }
+Rails.root.glob("spec/support/**/*.rb").sort_by(&:to_s).each { |file| require file }
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
