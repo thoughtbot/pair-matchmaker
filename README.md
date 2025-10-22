@@ -1,6 +1,8 @@
-# Double Up
+# Pair Matchmaker
 
-This application is intended to be a self-hosted version of Donut.
+## Acknowledgement
+
+This tool is based on TestDouble's Double Up tool and forked originally from https://github.com/testdouble/double-up in April 2022. As of October 2025, it remains separate and has not brought in any later changes from Double Up.
 
 ## System Requirements
 
