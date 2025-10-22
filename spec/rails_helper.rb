@@ -1,6 +1,13 @@
-require "spec_helper"
-
 ENV["RAILS_ENV"] ||= "test"
+
+if ENV.fetch("COVERAGE", false)
+  require "simplecov"
+  SimpleCov.start "rails" do
+    enable_coverage :branch
+  end
+end
+
+require "spec_helper"
 require_relative "../config/environment"
 
 abort("The Rails environment is running in production mode!") if Rails.env.production?
@@ -17,7 +24,9 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
-  config.fixture_path = Rails.root.join("spec/fixtures")
+  config.fixture_paths = [
+    Rails.root.join("spec/fixtures")
+  ]
 
   config.use_transactional_fixtures = true
 
